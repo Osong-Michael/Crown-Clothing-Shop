@@ -2,7 +2,7 @@ import React from 'react';
 import FormInput from '../FormInput';
 import CustomButton from '../CustomButton';
 
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../firebase/firebase.utils';
 
 import './index.scss';
 
@@ -31,9 +31,10 @@ class SignUp extends React.Component {
         };
 
         try {
-            const { user } = await auth.createUserWithEmailAndPassword(email, password);
+            const { user } = await createAuthUserWithEmailAndPassword(email, password);
+            console.log('FROM SIGN UP:', user)
 
-            createUserProfileDocument(user, { displayName });
+            createUserDocumentFromAuth(user, { displayName });
 
             this.setState({
                 displayName: '',
@@ -41,8 +42,12 @@ class SignUp extends React.Component {
                 password: '',
                 confirmPassword: ''
             });
-        } catch(err) {
-            console.log(err);
+        } catch(error) {
+            if (error.code === 'auth/email-already-in-use') {
+                alert('Cannot create user, email already in use');
+              } else {
+                console.log('user creation encountered an error', error);
+            }
         }
     };
 

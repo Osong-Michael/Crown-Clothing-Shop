@@ -1,52 +1,74 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
-import 'firebase/compat/auth';
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  signInWithRedirect,
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDKAGUdwUkqDg9K8xK4hgU7ZdXQADnW7cY",
-    authDomain: "crown-db-271cd.firebaseapp.com",
-    projectId: "crown-db-271cd",
-    storageBucket: "crown-db-271cd.appspot.com",
-    messagingSenderId: "992535355314",
-    appId: "1:992535355314:web:a2f66b9e81943d69a64eab",
-    measurementId: "G-55KW3FD24G"
+  apiKey: "AIzaSyDKAGUdwUkqDg9K8xK4hgU7ZdXQADnW7cY",
+  authDomain: "crown-db-271cd.firebaseapp.com",
+  projectId: "crown-db-271cd",
+  storageBucket: "crown-db-271cd.appspot.com",
+  messagingSenderId: "992535355314",
+  appId: "1:992535355314:web:a2f66b9e81943d69a64eab",
+  measurementId: "G-55KW3FD24G"
 };
 
+const firebaseApp = initializeApp(firebaseConfig);
 
-firebase.initializeApp(firebaseConfig);
+const googleProvider = new GoogleAuthProvider();
 
-export const createUserProfileDocument = async (userAuth, additionalData) => {
-    if (!userAuth) return;
-  
-    const userRef = firestore.doc(`users/${userAuth.uid}`);
-  
-    const snapShot = await userRef.get();
-  
-    if (!snapShot.exists) {
-      const { displayName, email } = userAuth;
-      const createdAt = new Date();
-      try {
-        await userRef.set({
-          displayName,
-          email,
-          createdAt,
-          ...additionalData
-        });
-      } catch (error) {
-        console.log('error creating user', error.message);
-      }
+googleProvider.setCustomParameters({
+  prompt: 'select_account',
+});
+
+export const auth = getAuth();
+
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+
+// export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
+
+export const db = getFirestore();
+
+export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
+  if (!userAuth) return;
+
+  const userDocRef = doc(db, 'users', userAuth.uid);
+
+  const userSnapshot = await getDoc(userDocRef);
+
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+
+    try {
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+        ...additionalInformation,
+      });
+    } catch (error) {
+      console.log('error creating the user', error.message);
     }
-  
-    return userRef;
+  }
+
+  return userDocRef;
 };
 
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
 
+  return await createUserWithEmailAndPassword(auth, email, password);
+};
 
-const provider = new firebase.auth.GoogleAuthProvider();
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
 
-provider.setCustomParameters({ prompt: 'select_account' });
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
-
-export default firebase;
+  return await signInWithEmailAndPassword(auth, email, password);
+};

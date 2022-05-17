@@ -1,11 +1,11 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import HomePage from './Pages/HomePage';
 import ShopPage from './Pages/Shop';
 import Header from './Components/Header';
 import AuthPages from './Pages/Authentication';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { auth, createUserDocumentFromAuth } from './firebase/firebase.utils';
 import './App.css';
 
 class App extends React.Component {
@@ -22,16 +22,10 @@ class App extends React.Component {
   componentDidMount() {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+        const userRef = await createUserDocumentFromAuth(userAuth);
 
-        userRef.onSnapshot(snapShot => {
-          this.setState({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data()
-            }
-          });
-        });
+        // userRef.get(query => console.log('QUERY:', query));
+        console.log('USER REF', userRef)
       } else {
         this.setState({ currentUser: userAuth });
       }
@@ -43,14 +37,16 @@ class App extends React.Component {
   };
 
   render() {
+    console.log('USER from APP JS: ', this.state.currentUser)
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/shop" component={ShopPage} />
-          <Route path="/signIn" component={AuthPages} />
-        </Switch>
+        <Routes>
+          <Route path='/' element={<Header currentUser={this.state.currentUser} />}>
+            <Route index element={<HomePage />} />
+            <Route path="shop" element={<ShopPage />} />
+            <Route path="sign-in" element={<AuthPages />} />
+          </Route>
+        </Routes>
       </div>
     );
   };
