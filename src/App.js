@@ -5,7 +5,7 @@ import HomePage from './Pages/HomePage';
 import ShopPage from './Pages/Shop';
 import Header from './Components/Header';
 import AuthPages from './Pages/Authentication';
-import './App.css';
+import './App.scss';
 
 const App = () => (
       <div>
