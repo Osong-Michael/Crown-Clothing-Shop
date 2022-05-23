@@ -5,6 +5,7 @@ import HomePage from './Pages/HomePage';
 import ShopPage from './Pages/Shop';
 import Header from './Components/Header';
 import AuthPages from './Pages/Authentication';
+import Checkout from './Pages/Checkout';
 import './App.scss';
 
 const App = () => (
@@ -14,6 +15,7 @@ const App = () => (
             <Route index element={<HomePage />} />
             <Route path="shop" element={<ShopPage />} />
             <Route path="auth" element={<AuthPages />} />
+            <Route path="checkout" element={<Checkout />} />
           </Route>
         </Routes>
       </div>
