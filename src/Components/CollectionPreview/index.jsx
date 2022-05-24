@@ -3,11 +3,15 @@ import CollectionItem from '../CollectionItem';
 
 import './index.scss';
 
-const CollectionPreview = ( { title, items }) => (
+const CollectionPreview = ({ title, items }) => (
     <div className='collection-preview'>
-        <h1 className='title'>{title.toUpperCase()}</h1>
+        <h1>
+            <span className="title">
+                {title.toUpperCase()}
+            </span>
+        </h1>
         <div className='preview'>
-            {items.filter((item, idx) => idx < 4).map((product) => (
+            {items.filter((_, idx) => idx < 4).map(product => (
                 <CollectionItem key={product.id} product={product} />
             ))}
         </div>
