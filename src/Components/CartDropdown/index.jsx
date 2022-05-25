@@ -4,7 +4,7 @@ import CartItem from '../CartItem';
 import { CartContext } from '../../Context/cartContext';
 
 import CustomButton from '../CustomButton';
-import './index.scss';
+import { CartDropdownContainer, EmptyMessage, CartItems } from './index.styles';
 
 
 const CartDropdown = () => {
@@ -16,12 +16,16 @@ const CartDropdown = () => {
     };
 
     return (
-        <div className="cart-dropdown-container">
-            <div className="cart-items">
-                {cartItems.map(item => <CartItem key={item.id} cartItem={item} />)}
-            </div>
+        <CartDropdownContainer>
+            <CartItems>
+                { cartItems.length ? (
+                    cartItems.map(item => <CartItem key={item.id} cartItem={item} />)
+                ) : (
+                    <EmptyMessage>Your Cart is Empty</EmptyMessage>
+                )}
+            </CartItems>
             <CustomButton onClick={goToCheckoutHandler}>Go to checkout</CustomButton>
-        </div>
+        </CartDropdownContainer>
     );
 };
 

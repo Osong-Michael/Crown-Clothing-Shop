@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { signOutUser } from '../../firebase/firebase.utils';
 import CartIcon from '../CartIcon';
 import CartDropdown from '../CartDropdown';
@@ -9,7 +9,7 @@ import { UserContext } from '../../Context/userContext';
 import { CartContext } from '../../Context/cartContext';
 
 
-import './index.scss';
+import { HeaderContainer, OptionsContainer, LogoContainer, OptionLink } from './index.styles';
 
 
 const Header = () => {
@@ -21,37 +21,38 @@ const Header = () => {
 
     return (
         <Fragment>
-            <div className="header">
-                <Link className='logo-container' to='/'>
+            <HeaderContainer>
+                <LogoContainer to='/'>
                     <Logo className='logo' />
-                </Link>
+                </LogoContainer>
 
-                <div className="options">
-                    <Link className='option' to="/shop">
+                <OptionsContainer>
+                    <OptionLink to="/shop">
                         SHOP
-                    </Link>
-                    <Link className='option' to="/shop">
+                    </OptionLink>
+                    <OptionLink to="/shop">
                         CONTACT
-                    </Link>
+                    </OptionLink>
                     {
                         currentUser ? 
-                        (   <div
+                        (   <OptionLink
+                                as='div'
                                 className="option"
                                 onClick={signOutHandle}
                             >
                                 SIGN OUT
-                            </div>
+                            </OptionLink>
                         )
                         :
-                        (   <Link className='option' to="/auth">
+                        (   <OptionLink to="/auth">
                                 SIGN IN
-                            </Link>
+                            </OptionLink>
                         )
                     }
                     <CartIcon />
-                </div>
+                </OptionsContainer>
                { isCartOpen &&  <CartDropdown /> }
-            </div>
+            </HeaderContainer>
             <Outlet />
         </Fragment>
     )
