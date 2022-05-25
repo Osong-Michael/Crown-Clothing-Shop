@@ -5,7 +5,7 @@ import CustomButton, { BUTTON_TYPES } from '../CustomButton';
 import { signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from '../../firebase/firebase.utils';
 
 
-import './index.scss';
+import { SignInContainer, Buttons } from './index.styles';
 
 
 const defaultFormFields = {
@@ -49,7 +49,7 @@ const SignIn = () => {
 
 
     return (
-        <div className="sign-in">
+        <SignInContainer>
             <h2>I already have an account</h2>
             <span>Sign in with your email and password</span>
 
@@ -72,12 +72,12 @@ const SignIn = () => {
                     label="Password"
                 />
 
-                <div className="buttons">
+                <Buttons>
                     <CustomButton type="submit">SIGN IN</CustomButton>
                     <CustomButton type="button" onClick={signInWithGoogle} buttonType={BUTTON_TYPES.google} >SIGN IN WITH GOOGLE</CustomButton>
-                </div>
+                </Buttons>
             </form>
-        </div>
+        </SignInContainer>
     )
 };
 

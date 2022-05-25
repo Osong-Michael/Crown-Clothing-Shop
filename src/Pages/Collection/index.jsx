@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import CollectionItem from '../../Components/CollectionItem';
 import { CollectionsContext } from '../../Context/collectionsContext';
 
-import './index.scss';
+import { ColletionContainer, CollectionTitle } from './index.styles';
 
 
 const Collection = () => {
@@ -20,12 +20,12 @@ const Collection = () => {
 
     return (
         <Fragment>
-            <h2 className='collection-title'>{collection.toUpperCase()}</h2>
-            <div className="collection-container">
+            <CollectionTitle>{collection.toUpperCase()}</CollectionTitle>
+            <ColletionContainer>
                 { products && products.map(product => (
                     <CollectionItem key={product.id} product={product} />
                 ))}
-            </div>
+            </ColletionContainer>
         </Fragment>
     );
 };

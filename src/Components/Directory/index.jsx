@@ -1,6 +1,6 @@
 import React from 'react';
 import MenuItem from '../MenuItem';
-import './index.scss';
+import { DirectoryMenuContainer } from './index.styles';
 
 const Directory = () => {
   const sections = [
@@ -39,9 +39,9 @@ const Directory = () => {
   ]
     
     return (
-        <div className="directory-menu">
+        <DirectoryMenuContainer>
             {sections.map(({title, imageUrl, id, size}) => (<MenuItem key={id} title={title} imageUrl={imageUrl} size={size} />))}
-        </div>
+        </DirectoryMenuContainer>
     )
 };
 

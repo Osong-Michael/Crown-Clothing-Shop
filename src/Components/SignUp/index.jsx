@@ -4,7 +4,7 @@ import CustomButton from '../CustomButton';
 
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../firebase/firebase.utils';
 
-import './index.scss';
+import { SignUpContainer, Title } from './index.styles';
 
 
 const defaultFormFields = {
@@ -49,11 +49,11 @@ const SignUp = () => {
 
 
     return (
-        <div className="sign-up">
-            <h2 className="title">I do not have an account</h2>
+        <SignUpContainer>
+            <Title>I do not have an account</Title>
             <span>Sign up with email and password</span>
 
-            <form className='sign-up-form' onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <FormInput
                     type='text'
                     name='displayName'
@@ -88,7 +88,7 @@ const SignUp = () => {
                 />
                 <CustomButton type='submit'>SIGN UP</CustomButton>   
             </form>
-        </div>
+        </SignUpContainer>
     )
 };
 
