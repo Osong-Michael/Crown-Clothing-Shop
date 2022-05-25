@@ -1,13 +1,25 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import './index.css';
+import { UserProvider } from './Context/userContext';
+import { CartProvider } from './Context/cartContext';
+import { CollectionsProvider } from './Context/collectionsContext';
+
+import './index.scss';
 import App from './App';
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+root.render(
   <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById('root')
+    <UserProvider>
+      <CollectionsProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </CollectionsProvider>
+    </UserProvider>
+  </BrowserRouter>
 );
 

@@ -1,20 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CartContext } from '../../Context/cartContext';
+import CustomButton, { BUTTON_TYPES } from '../CustomButton';
+import { CollectionItemContainer, CollectionFooter, BackgroundImage } from './index.styles';
 
-import './index.scss';
+const CollectionItem = ({ product }) => {
+    const { name, price, imageUrl } = product;
+    
+    const { addItemsToCart } = useContext(CartContext);
 
-const CollectionItem = ({ id, name, price, imageUrl }) => (
-    <div className="collection-item">
-        <div
-            className="image"
-            style={{
-                backgroundImage: `url(${imageUrl})`
-            }}
-        />
-        <div className="collection-footer">
-            <span className="name">{name}</span>
-            <span className="price">{price}</span>
-        </div>
-    </div>
-);
+    const addProductToCart = () => addItemsToCart(product);
+
+    return (
+        <CollectionItemContainer>
+            <BackgroundImage imageUrl={imageUrl} />
+            <CollectionFooter>
+                <span>{name}</span>
+                <span>${price}</span>
+            </CollectionFooter>
+            <CustomButton buttonType={BUTTON_TYPES.inverted} onClick={addProductToCart}>Add to Cart</CustomButton>
+        </CollectionItemContainer>
+    );
+
+};
 
 export default CollectionItem;

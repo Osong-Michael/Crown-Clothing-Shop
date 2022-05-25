@@ -1,59 +1,24 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import HomePage from './Pages/HomePage';
 import ShopPage from './Pages/Shop';
 import Header from './Components/Header';
 import AuthPages from './Pages/Authentication';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import './App.css';
+import Checkout from './Pages/Checkout';
+import './App.scss';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentUser: null
-    }
-  }
-
-  unSubscribeFromAuth = null;
-
-  componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-
-        userRef.onSnapshot(snapShot => {
-          this.setState({
-            currentUser: {
-              id: snapShot.id,
-              ...snapShot.data()
-            }
-          });
-        });
-      } else {
-        this.setState({ currentUser: userAuth });
-      }
-    });
-  };
-
-  componentWillUnmount() {
-    this.unSubscribeFromAuth();
-  };
-
-  render() {
-    return (
+const App = () => (
       <div>
-        <Header currentUser={this.state.currentUser} />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/shop" component={ShopPage} />
-          <Route path="/signIn" component={AuthPages} />
-        </Switch>
+        <Routes>
+          <Route path='/' element={<Header />}>
+            <Route index element={<HomePage />} />
+            <Route path="shop/*" element={<ShopPage />} />
+            <Route path="auth" element={<AuthPages />} />
+            <Route path="checkout" element={<Checkout />} />
+          </Route>
+        </Routes>
       </div>
-    );
-  };
-};
+);
 
 export default App;

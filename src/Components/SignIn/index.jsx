@@ -1,69 +1,84 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FormInput from '../FormInput';
-import CustomButton from '../CustomButton';
+import CustomButton, { BUTTON_TYPES } from '../CustomButton';
 
-import { signInWithGoogle } from '../../firebase/firebase.utils';
-
-import './index.scss';
+import { signInAuthUserWithEmailAndPassword, signInWithGooglePopup } from '../../firebase/firebase.utils';
 
 
+import { SignInContainer, Buttons } from './index.styles';
 
-class SignIn extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            email: '',
-            password: ''
-        };
-    };
+const defaultFormFields = {
+    email: '',
+    password: ''
+};
 
-    handleSubmit = event => {
+
+const SignIn = () => {
+    const [formFields, setFormFields] = useState(defaultFormFields);
+    const { email, password } = formFields;
+
+    const signInWithGoogle = async () => await signInWithGooglePopup();
+
+    const handleSubmit = async event => {
         event.preventDefault();
 
-        this.setState({ email: '', password: '' });
+
+        try {
+            await signInAuthUserWithEmailAndPassword(email, password);
+            setFormFields(defaultFormFields);
+        } catch(err) {
+            switch (err.code) {
+                case 'auth/wrong-password':
+                    alert('Incorrect Password');
+                    break;
+                case 'auth/user-not-found':
+                    alert('No user associated with this email');
+                    break;
+                default:
+                    console.log(err);
+            }
+        };
     }
 
-    handleChange = event => {
+    const handleChange = event => {
         const { value, name } = event.target;
 
-        this.setState({ [name]: value });
+        setFormFields({...formFields, [name]: value });
     }
 
 
-    render() {
-        return (
-            <div className="sign-in">
-                <h2>I already have an account</h2>
-                <span>Sign in with your email and password</span>
+    return (
+        <SignInContainer>
+            <h2>I already have an account</h2>
+            <span>Sign in with your email and password</span>
 
 
-                <form onSubmit={this.handleSubmit}>
-                    <FormInput
-                        type="email"
-                        name="email"
-                        value={this.state.email}
-                        handleChange={this.handleChange}
-                        label="Email"
-                        required
-                    />
+            <form onSubmit={handleSubmit}>
+                <FormInput
+                    type="email"
+                    name="email"
+                    value={email}
+                    handleChange={handleChange}
+                    label="Email"
+                    required
+                />
 
-                    <FormInput
-                        type="password"
-                        name='password'
-                        value={this.state.password}
-                        handleChange={this.handleChange}
-                        label="Password"
-                    />
+                <FormInput
+                    type="password"
+                    name='password'
+                    value={password}
+                    handleChange={handleChange}
+                    label="Password"
+                />
 
-                    <div className="buttons">
-                        <CustomButton type="submit">SIGN IN</CustomButton>
-                        <CustomButton onClick={signInWithGoogle} isGoogleSignIn >SIGN IN WITH GOOGLE</CustomButton>
-                    </div>
-                </form>
-            </div>
-        )
-    };
+                <Buttons>
+                    <CustomButton type="submit">SIGN IN</CustomButton>
+                    <CustomButton type="button" onClick={signInWithGoogle} buttonType={BUTTON_TYPES.google} >SIGN IN WITH GOOGLE</CustomButton>
+                </Buttons>
+            </form>
+        </SignInContainer>
+    )
 };
 
 export default SignIn;
