@@ -59,7 +59,7 @@ const SignIn = () => {
                     type="email"
                     name="email"
                     value={email}
-                    handleChange={handleChange}
+                    onChange={handleChange}
                     label="Email"
                     required
                 />
@@ -68,7 +68,7 @@ const SignIn = () => {
                     type="password"
                     name='password'
                     value={password}
-                    handleChange={handleChange}
+                    onChange={handleChange}
                     label="Password"
                 />
 

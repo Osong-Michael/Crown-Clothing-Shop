@@ -5,7 +5,6 @@ export const SignInContainer = styled.div`
     width: 380px;
     display: flex;
     flex-direction: column;
-
 `;
 
 export const Buttons = styled.div`
