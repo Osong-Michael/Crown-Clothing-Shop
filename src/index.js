@@ -1,9 +1,9 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { UserProvider } from './Context/userContext';
 import { CartProvider } from './Context/cartContext';
-import { CollectionsProvider } from './Context/collectionsContext';
+import { store } from './Store/store';
 
 import './index.scss';
 import App from './App';
@@ -12,14 +12,12 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-  <BrowserRouter>
-    <UserProvider>
-      <CollectionsProvider>
+  <Provider store={store}>
+    <BrowserRouter>
         <CartProvider>
           <App />
         </CartProvider>
-      </CollectionsProvider>
-    </UserProvider>
-  </BrowserRouter>
+    </BrowserRouter>
+  </Provider>
 );
 

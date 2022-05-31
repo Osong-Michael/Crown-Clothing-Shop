@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
 import HomePage from './Pages/HomePage';
@@ -6,9 +7,26 @@ import ShopPage from './Pages/Shop';
 import Header from './Components/Header';
 import AuthPages from './Pages/Authentication';
 import Checkout from './Pages/Checkout';
+import { onAuthStateChangedListener, createUserDocumentFromAuth } from './firebase/firebase.utils';
+import { setCurrentUser } from './Store/User/user.actions'
+
 import './App.scss';
 
-const App = () => (
+const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedListener(user => {
+        if (user) {
+            createUserDocumentFromAuth(user)
+        }
+        dispatch(setCurrentUser(user));
+    });
+
+    return unsubscribe;
+  }, []);
+  
+  return (
       <div>
         <Routes>
           <Route path='/' element={<Header />}>
@@ -19,6 +37,7 @@ const App = () => (
           </Route>
         </Routes>
       </div>
-);
+  );
+}
 
 export default App;

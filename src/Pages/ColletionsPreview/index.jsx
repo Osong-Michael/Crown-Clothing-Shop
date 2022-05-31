@@ -1,10 +1,9 @@
-import React, { useContext, Fragment } from 'react';
+import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import CollectionPreview from '../../Components/CollectionPreview';
 
-import { CollectionsContext } from '../../Context/collectionsContext';
-
 const CollectionsPreview = () => {
-    const { collections } = useContext(CollectionsContext);
+    const { collections } = useSelector(state => state.collectionsStore);
     return (
         <Fragment>
             {
