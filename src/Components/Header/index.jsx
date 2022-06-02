@@ -5,7 +5,7 @@ import { signOutUser } from '../../firebase/firebase.utils';
 import CartIcon from '../CartIcon';
 import CartDropdown from '../CartDropdown';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
-import { CartContext } from '../../Context/cartContext';
+import { selectIsCartOpen } from '../../Store/Cart/cart.selectors';
 
 
 import { HeaderContainer, OptionsContainer, LogoContainer, OptionLink } from './index.styles';
@@ -13,7 +13,7 @@ import { HeaderContainer, OptionsContainer, LogoContainer, OptionLink } from './
 
 const Header = () => {
     const { currentUser } = useSelector((state => state.user));
-    const { isCartOpen } = useContext(CartContext);
+    const isCartOpen = useSelector(selectIsCartOpen);
     const signOutHandle = async () => {
         await signOutUser();
     };

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import CollectionPreview from '../../Components/CollectionPreview';
-import { formatCollectionsData } from '../../Helpers/collectionsHelper';
+import { formatCollectionsData } from '../../Store/Collections/collections.selector';
 
 const CollectionsPreview = () => {
     const collections = useSelector(formatCollectionsData);

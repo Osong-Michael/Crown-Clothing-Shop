@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import CollectionItem from '../../Components/CollectionItem';
-import { formatCollectionsData } from '../../Helpers/collectionsHelper';
+import { formatCollectionsData } from '../../Store/Collections/collections.selector';
 
 import { ColletionContainer, CollectionTitle } from './index.styles';
 

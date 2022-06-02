@@ -14,4 +14,4 @@ export const formatCollectionsData = createSelector(
         acc[title.toLowerCase()] = items;
         return acc;
     }, {})
-)
+);
