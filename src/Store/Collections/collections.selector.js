@@ -7,7 +7,7 @@ export const selectCollections = createSelector(
     (collectionsSlice) => collectionsSlice.collections
 );
 
-export const formatCollectionsData = createSelector(
+export const selectCollectionItems = createSelector(
     [selectCollections],
     (arr) => arr.reduce((acc, collection) => {
         const { title, items } = collection
@@ -15,3 +15,8 @@ export const formatCollectionsData = createSelector(
         return acc;
     }, {})
 );
+
+export const selectCollectionIsLoading = createSelector(
+    [selectCollections],
+    (collectionSlice) => collectionSlice.isLoading
+)
