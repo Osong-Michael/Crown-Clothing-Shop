@@ -13,9 +13,9 @@ const ShopPage = () => {
 
     useEffect(() => {
         const getCollectionsMap = async () => {
-            const collectionMap = await getCollectionsAndDocuments();
+            const collectionArray = await getCollectionsAndDocuments();
 
-            dispatch(setAllCollections(collectionMap));
+            dispatch(setAllCollections(collectionArray));
         };
 
         getCollectionsMap();

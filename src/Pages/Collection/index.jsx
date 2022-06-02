@@ -3,13 +3,14 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import CollectionItem from '../../Components/CollectionItem';
+import { formatCollectionsData } from '../../Helpers/collectionsHelper';
 
 import { ColletionContainer, CollectionTitle } from './index.styles';
 
 
 const Collection = () => {
     const { collection } = useParams();
-    const { collections } = useSelector(state => state.collectionsStore);
+    const collections = useSelector(formatCollectionsData);
 
     const [products, setProducts] = useState(collections[collection]);
 

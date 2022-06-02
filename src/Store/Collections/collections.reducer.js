@@ -1,6 +1,6 @@
 import { COLLECTION_ACTION_TYPES } from "./collections.types";
 const INITIAL_STATE = {
-    collections: {},
+    collections: [],
 };
 
 
