@@ -7,8 +7,7 @@ import ShopPage from './Pages/Shop';
 import Header from './Components/Header';
 import AuthPages from './Pages/Authentication';
 import Checkout from './Pages/Checkout';
-import { onAuthStateChangedListener, createUserDocumentFromAuth } from './firebase/firebase.utils';
-import { setCurrentUser } from './Store/User/user.actions'
+import { checkUserSession } from './Store/User/user.actions'
 
 import './App.scss';
 
@@ -16,14 +15,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChangedListener(user => {
-        if (user) {
-            createUserDocumentFromAuth(user)
-        }
-        dispatch(setCurrentUser(user));
-    });
-
-    return unsubscribe;
+    dispatch(checkUserSession());
   }, []);
   
   return (
