@@ -1,19 +1,26 @@
-import React, { useContext, Fragment } from 'react';
+import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import CollectionPreview from '../../Components/CollectionPreview';
-
-import { CollectionsContext } from '../../Context/collectionsContext';
+import { selectCollectionItems, selectCollectionIsLoading } from '../../Store/Collections/collections.selector';
+import Spinner from '../../Components/Spinner';
 
 const CollectionsPreview = () => {
-    const { collections } = useContext(CollectionsContext);
+    const collections = useSelector(selectCollectionItems);
+    const isLoading = useSelector(selectCollectionIsLoading);
+
     return (
         <Fragment>
             {
-                Object.keys(collections).map(title => {
-                    const items = collections[title];
-                    return (
-                        <CollectionPreview key={title} title={title} items={items} />
-                    )
-                })
+               isLoading ? (
+                   <Spinner />
+               ) : (
+                    Object.keys(collections).map(title => {
+                        const items = collections[title];
+                        return (
+                            <CollectionPreview key={title} title={title} items={items} />
+                        )
+                    })
+               )
             }
         </Fragment>
     )

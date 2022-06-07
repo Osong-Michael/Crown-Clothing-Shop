@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import CollectionItem from '../CollectionItem';
 
 import { CollectionPreviewContainer, Title, Preview } from './index.styles';
