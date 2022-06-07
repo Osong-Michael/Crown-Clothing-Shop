@@ -11,7 +11,7 @@
   <h1 align="center">Crown Clothing</h1>
 
   <p align="center">
-    <a href="https://oa7-weather-app.netlify.app/"><strong>View Demo</strong></a>
+    <a href="https://myoa7shop.netlify.app/"><strong>View Demo</strong></a>
     ·
     <a href="https://github.com/Osong-Michael/Crown-Clothing-Shop/issues">Report Bug</a>
     ·
