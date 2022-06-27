@@ -4,6 +4,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { store, persistor } from './Store/store';
+import { Elements } from '@stripe/react-stripe-js';
+import { stripePromise } from './stripe/stripe.utils';
 
 import './index.scss';
 import App from './App';
@@ -15,7 +17,9 @@ root.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
       <BrowserRouter>
-        <App />
+        <Elements stripe={stripePromise}>
+          <App />
+        </Elements>
       </BrowserRouter>
     </PersistGate>
   </Provider>
