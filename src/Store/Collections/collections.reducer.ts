@@ -1,15 +1,23 @@
-import { COLLECTION_ACTION_TYPES } from "./collections.types";
-const INITIAL_STATE = {
+import { Collection, COLLECTION_ACTION_TYPES } from "./collections.types";
+import { CollectionAction } from "./collections.actions";
+
+export type CollectionsState = {
+    readonly collections: Collection[];
+    readonly isLoading: boolean;
+    readonly error: Error | null;
+};
+
+
+const INITIAL_STATE: CollectionsState = {
     collections: [],
     isLoading: false,
     error: null,
 };
 
 
-export const collectionsReducer = (state = INITIAL_STATE, action) => {
-    const { type, payload } = action;
+export const collectionsReducer = (state = INITIAL_STATE, action = {} as CollectionAction) => {
 
-    switch(type) {
+    switch(action.type) {
         case COLLECTION_ACTION_TYPES.FETCH_COLLECTIONS_START:
             return {
                 ...state,
@@ -18,14 +26,14 @@ export const collectionsReducer = (state = INITIAL_STATE, action) => {
         case COLLECTION_ACTION_TYPES.FETCH_COLLECTIONS_SUCCESS:
             return {
                 ...state,
-                collections: payload,
+                collections: action.payload,
                 isLoading: false,
             };
         case COLLECTION_ACTION_TYPES.FETCH_COLLECTIONS_FAIL:
             return {
                 ...state,
                 isLoading: false,
-                error: payload,
+                error: action.payload,
             }
 
         default:
