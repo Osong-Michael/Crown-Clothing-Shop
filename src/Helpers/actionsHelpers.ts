@@ -1,4 +1,7 @@
-export const addCartItem = (cartItems, productToAdd) => {
+import { CartItem } from "../Store/Cart/cart.types";
+import { CollectionItem } from "../Store/Collections/collections.types";
+
+export const addCartItem = (cartItems: CartItem[], productToAdd: CollectionItem): CartItem[] => {
     const existingCartItem = cartItems.find(item => item.id === productToAdd.id);
 
     if (existingCartItem) {
@@ -8,12 +11,12 @@ export const addCartItem = (cartItems, productToAdd) => {
     return [ ...cartItems, { ...productToAdd, quantity: 1 } ];
 };
 
-export const removeCartItem = (cartItems, cartItemToRemove) => {
+export const removeCartItem = (cartItems: CartItem[], cartItemToRemove: CartItem): CartItem[] => {
     const existingCartItem = cartItems.find(
       (cartItem) => cartItem.id === cartItemToRemove.id
     );
   
-    if (existingCartItem.quantity === 1) {
+    if (existingCartItem && existingCartItem.quantity === 1) {
       return cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
     }
   
@@ -24,4 +27,4 @@ export const removeCartItem = (cartItems, cartItemToRemove) => {
     );
 };
 
-export const clearCartItem = (cartItems, cartItemToClear) => cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
+export const clearCartItem = (cartItems: CartItem[], cartItemToClear: CartItem): CartItem[] => cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
