@@ -2,8 +2,9 @@ import { createSelector } from 'reselect';
 
 import { CollectionsState } from './collections.reducer';
 import { CollectionMap } from './collections.types';
+import { RootState } from '../store';
 
-const selectedCollectionsReducer = (state): CollectionsState => state.collectionsStore;
+const selectedCollectionsReducer = (state: RootState): CollectionsState => state.collectionsStore;
 
 export const selectCollections = createSelector(
     [selectedCollectionsReducer],
@@ -20,6 +21,6 @@ export const selectCollectionItems = createSelector(
 );
 
 export const selectCollectionIsLoading = createSelector(
-    [selectCollections],
+    [selectedCollectionsReducer],
     (collectionSlice) => collectionSlice.isLoading
 )
