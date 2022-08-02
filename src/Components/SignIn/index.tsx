@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import FormInput from '../FormInput';
 import CustomButton, { BUTTON_TYPES } from '../CustomButton';
@@ -20,28 +20,19 @@ const SignIn = () => {
 
     const signInWithGoogle = () => dispatch(googleSignInStart());
 
-    const handleSubmit = async event => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
 
         try {
             dispatch(emailSignInStart(email, password))
             setFormFields(defaultFormFields);
-        } catch(err) {
-            switch (err.code) {
-                case 'auth/wrong-password':
-                    alert('Incorrect Password');
-                    break;
-                case 'auth/user-not-found':
-                    alert('No user associated with this email');
-                    break;
-                default:
-                    console.log(err);
-            }
+        } catch(error) {
+            console.log('Invalid User Credentials', error)
         };
     }
 
-    const handleChange = event => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { value, name } = event.target;
 
         setFormFields({...formFields, [name]: value });

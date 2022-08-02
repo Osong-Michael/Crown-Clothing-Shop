@@ -1,6 +1,11 @@
 import styled, { css } from 'styled-components';
 
-export const BackgroundImage = styled.div`
+type BackgroundImageProps = {
+  imageUrl: string;
+}
+
+
+export const BackgroundImage = styled.div<BackgroundImageProps>`
   width: 100%;
   height: 100%;
   background-size: cover;
@@ -34,7 +39,11 @@ export const Content = styled.div`
   }
 `;
 
-export const MenuItemContainer = styled.div`
+type MenuItemProps = {
+  size: string | undefined;
+}
+
+export const MenuItemContainer = styled.div<MenuItemProps>`
   ${({ size }) => {
       switch (size) {
         case 'large':

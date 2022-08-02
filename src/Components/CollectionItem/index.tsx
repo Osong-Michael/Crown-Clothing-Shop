@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemsToCart } from '../../Store/Cart/cart.actions';
 import { selectCartItems } from '../../Store/Cart/cart.selectors';
@@ -6,7 +6,16 @@ import { selectCartItems } from '../../Store/Cart/cart.selectors';
 import CustomButton, { BUTTON_TYPES } from '../CustomButton';
 import { CollectionItemContainer, CollectionFooter, BackgroundImage } from './index.styles';
 
-const CollectionItem = ({ product }) => {
+type CollectionItemProps = {
+    product: {
+      id: number;
+      imageUrl: string;
+      price: number;
+      name: string;
+    }
+  };
+
+const CollectionItem: FC<CollectionItemProps> = ({ product }) => {
     const dispatch = useDispatch();
     const cartItems = useSelector(selectCartItems);
     const { name, price, imageUrl } = product;

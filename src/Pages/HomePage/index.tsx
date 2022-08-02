@@ -1,4 +1,3 @@
-import React from 'react';
 import Directory from '../../Components/Directory';
 import { HomePageContainer } from './index.styles'
 

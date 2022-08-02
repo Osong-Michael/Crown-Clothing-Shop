@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 
@@ -21,7 +21,7 @@ const App = () => {
   return (
       <div>
         <Routes>
-          <Route path='/' element={<Header />}>
+          <Route path='/' element={<Header />} >
             <Route index element={<HomePage />} />
             <Route path="shop/*" element={<ShopPage />} />
             <Route path="auth" element={<AuthPages />} />

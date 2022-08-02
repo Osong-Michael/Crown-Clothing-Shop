@@ -1,9 +1,14 @@
-import React from 'react';
+import { FC } from 'react';
 import CollectionItem from '../CollectionItem';
-
 import { CollectionPreviewContainer, Title, Preview } from './index.styles';
+import { CollectionItem as CollectionItemProps } from '../../Store/Collections/collections.types'
 
-const CollectionPreview = ({ title, items }) => (
+type CollectionPreviewProps = {
+    title: string;
+    items: CollectionItemProps[];
+};
+
+const CollectionPreview: FC<CollectionPreviewProps> = ({ title, items }) => (
     <CollectionPreviewContainer>
         <h1>
             <Title to={title}>

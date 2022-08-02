@@ -9,8 +9,12 @@ import { selectCollectionItems, selectCollectionIsLoading } from '../../Store/Co
 import { ColletionContainer, CollectionTitle } from './index.styles';
 
 
+type CollectionRouteParams = {
+    collection: string;
+};
+
 const Collection = () => {
-    const { collection } = useParams();
+    const { collection } = useParams<keyof CollectionRouteParams>() as CollectionRouteParams;
     const collections = useSelector(selectCollectionItems);
     const isLoading = useSelector(selectCollectionIsLoading);
 

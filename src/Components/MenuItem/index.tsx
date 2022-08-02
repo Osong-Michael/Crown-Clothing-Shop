@@ -1,8 +1,17 @@
-import React from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MenuItemContainer, BackgroundImage, Content } from './index.styles';
 
-const MenuItem = ({ title, imageUrl, size, linkUrl }) => {
+
+type MenuItemProps = {
+    title: string;
+    imageUrl: string;
+    size: string | undefined;
+    linkUrl: string;
+
+};
+
+const MenuItem: FC<MenuItemProps> = ({ title, imageUrl, size, linkUrl }) => {
     const navigate = useNavigate();
 
     const onNavigateHandler = () => navigate(linkUrl);

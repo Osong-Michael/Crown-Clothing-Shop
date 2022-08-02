@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import CollectionPreview from '../../Components/CollectionPreview';
 import { selectCollectionItems, selectCollectionIsLoading } from '../../Store/Collections/collections.selector';
